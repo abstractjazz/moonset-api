@@ -12,6 +12,7 @@ const initCanvas = (id) => {
 return new fabric.Canvas(id, {
     width: 500,
     height: 500,
+    selection: false
     });
 
 }
@@ -28,8 +29,6 @@ let mousePressed = false;
 
 setBackground(link, canvas);
 
-
-
 canvas.on('mouse:move', (event) => {
     // console.log(event)
     if (mousePressed) {
@@ -43,8 +42,12 @@ canvas.on('mouse:move', (event) => {
 canvas.on('mouse:down', (event) => {
     // console.log(event)
     mousePressed = true;
+    canvas.setCursor('crosshair')
+    canvas.renderAll()
 })
 
 canvas.on('mouse:up', (event) => {
      mousePressed = false;
+     canvas.setCursor('default')
+     canvas.renderAll()
 })
