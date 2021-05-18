@@ -7,7 +7,7 @@ console.log("I am in index.js")
 // });
 
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
-
+const toggleBtn = document.getElementById('toggle-pan')
 const initCanvas = (id) => {
 return new fabric.Canvas(id, {
     width: 500,
@@ -25,10 +25,12 @@ const setBackground = (url, canvas) => {
 }
 
 const togglePan = () => {
-    if (currentMode == modes.pan) {
+        if (currentMode == modes.pan) {
         currentMode = ' '
+        toggleBtn.style.backgroundColor = '';
     } else {
         currentMode = modes.pan
+        toggleBtn.style.backgroundColor = 'gray';
     }
 }
 
@@ -37,7 +39,7 @@ let mousePressed = false;
 
 let currentMode;
 const modes = {
-    pan: 'pan'
+    pan:'pan'
 }
 
 setBackground(link, canvas);
@@ -48,10 +50,11 @@ canvas.on('mouse:move', (event) => {
     canvas.setCursor('grab')
     canvas.renderAll()
     const mEvent = event.e; 
-    //what's this .e? 
+    // e is attribute of event object, the key is e, and the value is mouseover, the event 
+    // console.log(event)
     //passing movement x and movement y into fabric constructor 
-    const delta = new fabric.Point(mEvent.movementX, mEvent.movementY) 
-    canvas.relativePan(delta)
+    const movement = new fabric.Point(mEvent.movementX, mEvent.movementY) 
+    canvas.relativePan(movement)
     }
 })
 
