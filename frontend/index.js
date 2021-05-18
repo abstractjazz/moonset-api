@@ -8,7 +8,6 @@ console.log("I am in index.js")
 
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 
-
 const initCanvas = (id) => {
 return new fabric.Canvas(id, {
     width: 500,
@@ -25,11 +24,26 @@ const setBackground = (url, canvas) => {
 }
 
 const canvas = initCanvas("canvas");
+let mousePressed = false; 
+
 setBackground(link, canvas);
 
 
-canvas.on('mouse:over', (event) => {
+
+canvas.on('mouse:move', (event) => {
     // console.log(event)
-    const delta = fabric.Point(mEvent.movementX, mEvent.movementY)
-    canvas.relativePan()
+    const mEvent = event.e;
+    //passing movement x and movement y into fabric constructor 
+    const delta = new fabric.Point(mEvent.movementX, mEvent.movementY) 
+    canvas.relativePan(delta)
+})
+
+canvas.on('mouse:down', (event) => {
+    // console.log(event)
+    mousePressed = true;
+})
+
+canvas.on('mouse:up', (event) => {
+     mousePressed = false;
+
 })
