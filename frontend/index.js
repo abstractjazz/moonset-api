@@ -32,10 +32,12 @@ setBackground(link, canvas);
 
 canvas.on('mouse:move', (event) => {
     // console.log(event)
+    if (mousePressed) {
     const mEvent = event.e;
     //passing movement x and movement y into fabric constructor 
     const delta = new fabric.Point(mEvent.movementX, mEvent.movementY) 
     canvas.relativePan(delta)
+    }
 })
 
 canvas.on('mouse:down', (event) => {
@@ -45,5 +47,4 @@ canvas.on('mouse:down', (event) => {
 
 canvas.on('mouse:up', (event) => {
      mousePressed = false;
-
 })
