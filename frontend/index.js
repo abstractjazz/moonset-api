@@ -24,6 +24,14 @@ const setBackground = (url, canvas) => {
     })
 }
 
+const togglePan = () => {
+    if (currentMode == modes.pan) {
+        currentMode = ' '
+    } else {
+        currentMode = modes.pan
+    }
+}
+
 const canvas = initCanvas("canvas");
 let mousePressed = false; 
 
@@ -36,7 +44,7 @@ setBackground(link, canvas);
 
 canvas.on('mouse:move', (event) => {
     // console.log(event)
-    if (mousePressed **) {
+    if (mousePressed && currentMode === modes.pan) {
     canvas.setCursor('grab')
     canvas.renderAll()
     const mEvent = event.e; 
@@ -50,6 +58,7 @@ canvas.on('mouse:move', (event) => {
 canvas.on('mouse:down', (event) => {
     // console.log(event)
     mousePressed = true;
+    if (currentMode === modes.pan)
     canvas.setCursor('crosshair')
     canvas.renderAll()
 })
