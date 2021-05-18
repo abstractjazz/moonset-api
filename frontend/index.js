@@ -27,12 +27,20 @@ const setBackground = (url, canvas) => {
 const canvas = initCanvas("canvas");
 let mousePressed = false; 
 
+let currentMode;
+const modes = {
+    pan: 'pan'
+}
+
 setBackground(link, canvas);
 
 canvas.on('mouse:move', (event) => {
     // console.log(event)
-    if (mousePressed) {
-    const mEvent = event.e;
+    if (mousePressed **) {
+    canvas.setCursor('grab')
+    canvas.renderAll()
+    const mEvent = event.e; 
+    //what's this .e? 
     //passing movement x and movement y into fabric constructor 
     const delta = new fabric.Point(mEvent.movementX, mEvent.movementY) 
     canvas.relativePan(delta)
