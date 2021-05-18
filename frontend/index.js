@@ -41,6 +41,8 @@ const toggleMode = (mode) => {
     } else if (mode === modes.drawing) {
         if (currentMode === modes.drawing) {
         currentMode = ' '
+        canvas.isDrawingMode = true
+        canvas.renderAll()
         } else {
             currentMode = modes.drawing
         }
@@ -60,7 +62,11 @@ const setPanEvents = (canvas) => {
         //passing movement x and movement y into fabric constructor 
         const movement = new fabric.Point(mEvent.movementX, mEvent.movementY) 
         canvas.relativePan(movement)
+        } else if (mousePressed && currentMode === modes.drawing) {
+            canvas.isDrawingMode = false;
+            canvas.renderAll()
         }
+        //how to delete drawing 
     })
     
     canvas.on('mouse:down', (event) => {
