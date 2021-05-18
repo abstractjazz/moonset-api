@@ -26,3 +26,10 @@ const setBackground = (url, canvas) => {
 
 const canvas = initCanvas("canvas");
 setBackground(link, canvas);
+
+
+canvas.on('mouse:over', (event) => {
+    // console.log(event)
+    const delta = fabric.Point(mEvent.movementX, mEvent.movementY)
+    canvas.relativePan()
+})
