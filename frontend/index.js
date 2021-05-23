@@ -115,6 +115,7 @@ function fetchUsers() {
     function renderUsers(user) {
         const body = document.querySelector('body');
         const h2 = document.createElement('h2')
+        h2.innerHTML = user.name
         body.appendChild(h2)
         h2.innerHTML="cool!"
         console.log(user.name)
