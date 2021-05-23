@@ -6,8 +6,12 @@ console.log("I am in index.js")
 // // backgroundColor: 'blue'
 // });
 
+
+
+
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
+const drawingBtn = document.getElementById('toggle-drawing')
 const btnFocus = (element, bgColor) => {
     element.style.backgroundColor = bgColor
 }
@@ -39,6 +43,7 @@ const toggleMode = (mode) => {
         }
 
     } else if (mode === modes.drawing) {
+        btnFocus(drawingBtn, '#a0a0ba')
         if (currentMode === modes.drawing) {
         currentMode = ' '
         canvas.isDrawingMode = true
@@ -63,15 +68,17 @@ const setPanEvents = (canvas) => {
         const movement = new fabric.Point(mEvent.movementX, mEvent.movementY) 
         canvas.relativePan(movement)
         } else if (mousePressed && currentMode === modes.drawing) {
-            canvas.isDrawingMode = false;
+            btnFocus(drawingBtn, '')
+            canvas.isDrawingMode = false
             canvas.renderAll()
         }
         //how to delete drawing 
+        //allow user to assign movement to an object
     })
     
     canvas.on('mouse:down', (event) => {
         // console.log(event)
-        mousePressed = true;
+        mousePressed = true
         if (currentMode === modes.pan)
         canvas.setCursor('crosshair')
         canvas.renderAll()
@@ -96,5 +103,24 @@ const modes = {
 
 setBackground(link, canvas)
 setPanEvents(canvas)
+
+   
+
+function fetchUsers() {
+    return fetch("http://localhost:3000/users/2")
+    .then(resp => resp.json())
+    .then(json =>renderUsers(json))
+}
+
+    function renderUsers(user) {
+        const body = document.querySelector('body')
+        const h2 = document.createElement('h2')
+        body.appendChild(h2)
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    fetchUsers()
+})
+    
 
 

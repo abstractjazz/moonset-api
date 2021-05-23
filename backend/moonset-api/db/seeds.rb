@@ -5,3 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+def make_33_users
+
+    counter = 0
+    
+    while counter < 33 
+        counter += 1 
+      user = User.create(name:"user_#{counter}")
+      user.projects.build(title:"project_#{counter}")
+      user.save
+        end 
+    end  
+    
+    make_33_users
