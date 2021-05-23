@@ -115,10 +115,11 @@ function fetchUsers() {
     function renderUsers(user) {
         const body = document.querySelector('body')
         const h2 = document.createElement('h2')
+        h2.innerHTML = user.name
         body.appendChild(h2)
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function() {
     fetchUsers()
 })
     
