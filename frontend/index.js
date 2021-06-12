@@ -7,8 +7,6 @@ console.log("I am in index.js")
 // });
 
 
-
-
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
 const drawingBtn = document.getElementById('toggle-drawing')
@@ -34,16 +32,18 @@ const setBackground = (url, canvas) => {
 const toggleMode = (mode) => {
 
     if(mode === modes.pan) {
-        btnFocus(toggleBtn, '');
+        // btnFocus(toggleBtn, '')
         if(currentMode === modes.pan) {
         currentMode = ' '
         } else {
         currentMode = modes.pan
-        btnFocus(toggleBtn, '#a0a0ba');
+        canvas.isDrawingMode = false
+        canvas.renderAll()
+        // btnFocus(toggleBtn, '#a0a0ba')
         }
 
     } else if (mode === modes.drawing) {
-        btnFocus(drawingBtn, '#a0a0ba')
+        // btnFocus(drawingBtn, '#a0a0ba')
         if (currentMode === modes.drawing) {
         currentMode = ' '
         canvas.isDrawingMode = true
@@ -52,6 +52,13 @@ const toggleMode = (mode) => {
             currentMode = modes.drawing
         }
     }
+    console.log(mode)
+}
+
+const deleteItem = () => {
+const thing = canvas.getActiveObject()
+canvas.remove(thing)
+canvas.renderAll()
 }
 
 const setPanEvents = (canvas) => {
@@ -68,7 +75,7 @@ const setPanEvents = (canvas) => {
         const movement = new fabric.Point(mEvent.movementX, mEvent.movementY) 
         canvas.relativePan(movement)
         } else if (mousePressed && currentMode === modes.drawing) {
-            btnFocus(drawingBtn, '')
+            // btnFocus(drawingBtn, '')
             canvas.isDrawingMode = false
             canvas.renderAll()
         }
@@ -105,25 +112,25 @@ setBackground(link, canvas)
 setPanEvents(canvas)
 
 
-function fetchUsers() {
-    return fetch("http://localhost:3000/users/2")
-    .then(resp => resp.json())
-    .then(json =>renderUsers(json))
-}
+// function fetchUsers() {
+//     return fetch("http://localhost:3000/users/2")
+//     .then(resp => resp.json())
+//     .then(json =>renderUsers(json))
+// }
 
-    function renderUsers(user) {
-        const body = document.querySelector('body');
-        const h2 = document.createElement('h2')
-        // h2.innerHTML = user.name
-        body.appendChild(h2)
-        h2.innerHTML=user.name
-        console.log(user.name)
+//     function renderUsers(user) {
+//         const body = document.querySelector('body');
+//         const h2 = document.createElement('h2')
+//         // h2.innerHTML = user.name
+//         body.appendChild(h2)
+//         h2.innerHTML=user.name
+//         console.log(user.name)
 
- }
+//  }
 
-    document.addEventListener('click', function() {
-    fetchUsers()
-})
+//     // document.addEventListener('click', function() {
+//     // fetchUsers()
+// })
     
 
 
