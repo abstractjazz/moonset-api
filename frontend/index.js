@@ -104,7 +104,6 @@ const modes = {
 setBackground(link, canvas)
 setPanEvents(canvas)
 
-   
 
 function fetchUsers() {
     return fetch("http://localhost:3000/users/2")
@@ -115,11 +114,12 @@ function fetchUsers() {
     function renderUsers(user) {
         const body = document.querySelector('body');
         const h2 = document.createElement('h2')
-        h2.innerHTML = user.name
+        // h2.innerHTML = user.name
         body.appendChild(h2)
-        h2.innerHTML="cool!"
+        h2.innerHTML=user.name
         console.log(user.name)
-    }
+
+ }
 
     document.addEventListener('click', function() {
     fetchUsers()
