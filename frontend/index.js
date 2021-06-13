@@ -46,14 +46,13 @@ const toggleMode = (mode) => {
         // btnFocus(drawingBtn, '#a0a0ba')
         if (currentMode === modes.drawing) {
         currentMode = ' '
-        canvas.isDrawingMode = true
+        canvas.isDrawingMode = false
         canvas.renderAll()
         } else {
-            
-            canvas.freeDrawingBrush.color = "#ff7200"
-            canvas.freeDrawingBrush.width = 18
             currentMode = modes.drawing
-            canvas.isDrawingMode = false
+            canvas.freeDrawingBrush.color = color 
+            canvas.freeDrawingBrush.width = 18
+            canvas.isDrawingMode = true
             canvas.renderAll()
         }
     }
@@ -108,8 +107,20 @@ const setPanEvents = (canvas) => {
     
 }
 
+const setColor = () => {
+    const picker = document.getElementById('colorPicker')
+    picker.addEventListener('change', (event) => {
+        console.log(event.target.value)
+        color = event.target.value
+        canvas.freeDrawingBrush.color = color 
+        canvas.renderAll()
+    })
+
+}
+
 const canvas = initCanvas("canvas");
 let mousePressed = false; 
+let color ='#ff1493';
 
 let currentMode;
 const modes = {
@@ -119,6 +130,7 @@ const modes = {
 
 setBackground(link, canvas)
 setPanEvents(canvas)
+setColor()
 
 
 // function fetchUsers() {
