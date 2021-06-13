@@ -1,0 +1,9 @@
+body {
+    background: black;
+    position:fixed;
+}
+
+canvas {
+width: 100vw;
+height: 100vh;
+}

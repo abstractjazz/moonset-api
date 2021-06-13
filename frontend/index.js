@@ -16,8 +16,8 @@ const btnFocus = (element, bgColor) => {
 
 const initCanvas = (id) => {
 return new fabric.Canvas(id, {
-    width: 500,
-    height: 500,
+    width: window.innerWidth,
+    height: window.innerHeight,
     selection: false
     });
 }
@@ -49,10 +49,15 @@ const toggleMode = (mode) => {
         canvas.isDrawingMode = true
         canvas.renderAll()
         } else {
+            
+            canvas.freeDrawingBrush.color = "#ff7200"
+            canvas.freeDrawingBrush.width = 18
             currentMode = modes.drawing
+            canvas.isDrawingMode = false
+            canvas.renderAll()
         }
     }
-    console.log(mode)
+    // console.log(mode)
 }
 
 const deleteItem = () => {
@@ -60,6 +65,10 @@ const thing = canvas.getActiveObject()
 canvas.remove(thing)
 canvas.renderAll()
 }
+
+// const changeBrushToCircle = () => {
+//     canvas.freeDrawingBrush = new fabric.CircleBrush(canvas)
+// }
 
 const setPanEvents = (canvas) => {
 
@@ -76,8 +85,8 @@ const setPanEvents = (canvas) => {
         canvas.relativePan(movement)
         } else if (mousePressed && currentMode === modes.drawing) {
             // btnFocus(drawingBtn, '')
-            canvas.isDrawingMode = false
-            canvas.renderAll()
+            // canvas.isDrawingMode = false
+            // canvas.renderAll()
         }
         //how to delete drawing 
         //allow user to assign movement to an object
