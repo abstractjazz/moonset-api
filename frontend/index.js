@@ -6,6 +6,14 @@ console.log("I am in index.js")
 // // backgroundColor: 'blue'
 // });
 
+//ADD ABILITY FOR CUSTOM BACKGROUND IMAGE 
+//SAVE STATE AND SUBMIT USING DIRECTION BELOW: 
+//USE FABRIC'S BUILT IN TOJSON 
+//https://github.com/learn-co-curriculum/fewpjs-sending-data-with-fetch/blob/solution/index.js
+//ALSO CHECK HOW THEY HANDLED IN BEATMAKER 
+
+
+
 
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
@@ -118,6 +126,13 @@ const setColor = () => {
 
 }
 
+const imgAdded = (e) => {
+    console.log(e)
+    const img = document.getElementById("imgUpload")
+    const file = img.files[0];
+    reader.readAsDataURL(file);
+}
+
 const canvas = initCanvas("canvas");
 let mousePressed = false; 
 let color ='#ff1493';
@@ -128,9 +143,21 @@ const modes = {
     drawing: 'drawing'
 }
 
+const reader = new FileReader()
+
 setBackground(link, canvas)
 setPanEvents(canvas)
 setColor()
+const img = document.getElementById('imgUpload')
+img.addEventListener('change', imgAdded)
+
+reader.addEventListener("load", ()=> { 
+    console.log(reader.result)
+    fabric.Image.fromURL(reader.result, img => {
+        canvas.add(img)
+        canvas.requestRenderAll()
+    })
+})
 
 
 // function fetchUsers() {
