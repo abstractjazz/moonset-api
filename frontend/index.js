@@ -14,7 +14,7 @@ console.log("I am in index.js")
 
 
 
-
+const postUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
 const drawingBtn = document.getElementById('toggle-drawing')
@@ -159,6 +159,32 @@ reader.addEventListener("load", ()=> {
     })
 })
 
+const postProject = () => {
+    let title = document.getElementById('project-title')
+
+    let config = {
+        method: 'POST', 
+        body: JSON.stringify({
+            canvas: canvas,
+            title: title.value}),
+            headers: {
+              'Content-Type':   'application/json',
+               Accept: 'application/json'
+              }
+            }
+
+    fetch(postUrl, config)
+}
+
+document.getElementById("submit").addEventListener("click", function(event){
+    event.preventDefault;
+    postProject();
+})
+
+//what's the proper action for submitting? -- FOUND IT. 
+//Make a create action! 
+
+//basic setup for posting to server. needs more work. add project_params 
 
 // function fetchUsers() {
 //     return fetch("http://localhost:3000/users/2")
