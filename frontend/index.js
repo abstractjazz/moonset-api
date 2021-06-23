@@ -160,12 +160,11 @@ reader.addEventListener("load", ()=> {
 })
 
 const postProject = () => {
-    let title = document.getElementById('project-title')
-
+    let title = document.getElementById('project-title');
     let config = {
         method: 'POST', 
         body: JSON.stringify({
-            canvas: canvas,
+            canvas: JSON.stringify(canvas),
             title: title.value}),
             headers: {
               'Content-Type':   'application/json',
@@ -174,10 +173,11 @@ const postProject = () => {
             }
 
     fetch(postUrl, config)
+    
 }
 
 document.getElementById("submit").addEventListener("click", function(event){
-    event.preventDefault;
+    event.preventDefault();
     postProject();
 })
 
