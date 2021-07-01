@@ -14,7 +14,7 @@ console.log("I am in index.js")
 
 
 
-const postUrl = 'http://localhost:3000/projects'
+const projectUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
 const drawingBtn = document.getElementById('toggle-drawing')
@@ -159,6 +159,34 @@ reader.addEventListener("load", ()=> {
     })
 })
 
+const getProjects = () => {
+fetch(projectUrl).then(response=>response.json()).then(resp => {projectList(resp)})
+}
+
+const projectList = (projects) => {
+let projectDropDown = projects.map(proj => {
+    return `<option value="${proj.id}">${proj.title}</option>`
+}).join('')
+document.getElementById('project-list').innerHTML = projectDropDown
+console.log('getting projects!')
+}
+
+getProjects();
+
+const getProject = () => {
+    let id = document.getElementById('project-select').value
+    fetch(`${projectUrl}/${id}`)
+    .then(res=>res.json())
+    .then(resp =>{initCanvas(resp)})
+}
+
+document.getElementById('project-select').addEventListener('click', function(event) {
+    event.preventDefault();
+    getProject();
+    console.log(event.target)
+})
+ 
+
 const postProject = () => {
     let title = document.getElementById('project-title');
     let config = {
@@ -172,8 +200,7 @@ const postProject = () => {
               }
             }
 
-    fetch(postUrl, config)
-    
+    fetch(projectUrl, config)
 }
 
 document.getElementById("submit").addEventListener("click", function(event){

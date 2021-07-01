@@ -11,7 +11,8 @@ class ProjectsController < ApplicationController
     end 
 
     def show
-    project = Project.find_by(title: params[:project][:title])
+    project = Project.find_by_id(params[:id])
+    render json: project
     end 
 
     private 
