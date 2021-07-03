@@ -177,8 +177,27 @@ const getProject = () => {
     let id = document.getElementById('project-select').value
     fetch(`${projectUrl}/${id}`)
     .then(res=>res.json())
-    .then(resp =>{initCanvas(resp)})
-}
+    // .then(document.open())
+    .then(data => data.canvas.loadFromJSON())
+   }
+
+const canvasTwo = new fabric.Canvas("canvas");
+
+   document.addEventListener('click', function() {
+    fetch(`${projectUrl}/${2}`)
+    .then(res=>res.json())
+    .then(resp=> canvasTwo.loadFromJSON(resp.canvas))
+    canvas.requestRenderAll();
+    
+   })
+
+//need to append child? 
+//load from Json? 
+//was using initCanvas, which seems like wrong method
+//how to decipher the canvas object? back to video 
+
+
+// need to find correct thing to give to initCanvas 
 
 document.getElementById('project-select').addEventListener('click', function(event) {
     event.preventDefault();
@@ -196,12 +215,15 @@ const postProject = () => {
             title: title.value}),
             headers: {
               'Content-Type':   'application/json',
-               Accept: 'application/json'
+               'Accept': 'application/json'
               }
             }
 
     fetch(projectUrl, config)
 }
+
+//understand what's happening in this post -- 
+//watch a vid in the AM
 
 document.getElementById("submit").addEventListener("click", function(event){
     event.preventDefault();
