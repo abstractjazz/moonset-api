@@ -174,15 +174,15 @@ console.log('getting projects!')
 getProjects();
 
 
-const modCanvas = new fabric.Canvas("canvas");
+// const modCanvas = new fabric.Canvas("canvas");
 
 const getProject = () => {
     let id = document.getElementById('project-select').value
     fetch(`${projectUrl}/${id}`)
     .then(res=>res.json())
     // .then(document.open())
-    .then(data => modCanvas.loadFromJSON(data.canvas))
-    canvas.requestRenderAll();
+    .then(data => canvas.loadFromJSON(data.canvas))
+    canvas.renderAll();
    }
 
 
