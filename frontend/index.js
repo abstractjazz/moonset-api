@@ -173,23 +173,27 @@ console.log('getting projects!')
 
 getProjects();
 
+
+const modCanvas = new fabric.Canvas("canvas");
+
 const getProject = () => {
     let id = document.getElementById('project-select').value
     fetch(`${projectUrl}/${id}`)
     .then(res=>res.json())
     // .then(document.open())
-    .then(data => data.canvas.loadFromJSON())
+    .then(data => modCanvas.loadFromJSON(data.canvas))
+    canvas.requestRenderAll();
    }
 
-const canvasTwo = new fabric.Canvas("canvas");
 
-   document.addEventListener('click', function() {
-    fetch(`${projectUrl}/${2}`)
-    .then(res=>res.json())
-    .then(resp=> canvasTwo.loadFromJSON(resp.canvas))
-    canvas.requestRenderAll();
+
+//    document.addEventListener('click', function() {
+//     fetch(`${projectUrl}/${2}`)
+//     .then(res=>res.json())
+//     .then(resp=> canvasTwo.loadFromJSON(resp.canvas))
+//     canvas.requestRenderAll();
     
-   })
+//    })
 
 //need to append child? 
 //load from Json? 
