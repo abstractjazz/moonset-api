@@ -12,7 +12,10 @@ console.log("I am in index.js")
 //https://github.com/learn-co-curriculum/fewpjs-sending-data-with-fetch/blob/solution/index.js
 //ALSO CHECK HOW THEY HANDLED IN BEATMAKER 
 
-
+// NEED TO ADD CLASSES 
+// NEED TO ADD 'SAVE NEW' AND 'UPDATE CURRENT' Button 
+//NEED TO ADD VALIDATION SO THAT TWO PROJECTS CAN'T HAVE SAME NAME 
+//NEED ERROR HANDLING 
 
 const projectUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
@@ -27,15 +30,17 @@ return new fabric.Canvas(id, {
     width: window.innerWidth,
     height: window.innerHeight,
     selection: false
-    });
-}
-
-const setBackground = (url, canvas) => {
-    fabric.Image.fromURL(url, (image) => {
-        canvas.backgroundImage = image
-        canvas.renderAll()
     })
 }
+
+// const setBackground = (url, canvas) => {
+//     fabric.Image.fromURL(url, (image) => {
+//         canvas.backgroundImage = image
+//         canvas.renderAll()
+//     })
+// }
+
+
 
 const toggleMode = (mode) => {
 
@@ -134,8 +139,11 @@ const imgAdded = (e) => {
 }
 
 const canvas = initCanvas("canvas");
+const text = new fabric.Text("Upload an image to get started. Then feel free to delete me 🙃", {fill: "pink"})  
+canvas.add(text)
 let mousePressed = false; 
 let color ='#ff1493';
+
 
 let currentMode;
 const modes = {
@@ -145,7 +153,7 @@ const modes = {
 
 const reader = new FileReader()
 
-setBackground(link, canvas)
+// setBackground(link, canvas)
 setPanEvents(canvas)
 setColor()
 const img = document.getElementById('imgUpload')
@@ -211,6 +219,7 @@ document.getElementById('project-select').addEventListener('click', function(eve
  
 
 const postProject = () => {
+    
     let title = document.getElementById('project-title');
     let config = {
         method: 'POST', 
@@ -221,10 +230,18 @@ const postProject = () => {
               'Content-Type':   'application/json',
                'Accept': 'application/json'
               }
-            }
+            };
 
-    fetch(projectUrl, config)
-}
+        fetch(projectUrl, config)
+        .then(resp=>resp.json())
+        .then(data=>alert(data.message))
+        }
+   
+    
+    // .catch(error) {
+    //     alert(error.message)
+    // }
+
 
 //understand what's happening in this post -- 
 //watch a vid in the AM

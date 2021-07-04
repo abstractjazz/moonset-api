@@ -6,8 +6,12 @@ class ProjectsController < ApplicationController
     end
 
     def create 
-        project = Project.create(project_params)
-        project.save
+        project = Project.create(project_params) 
+        if project.save
+            render json: {status: "success", message: "SUCCESS: Project has been saved."}
+        else 
+            render json: {status: "error", message:"ERROR: Title must exist and be unique."}
+        end 
     end 
 
     def show
