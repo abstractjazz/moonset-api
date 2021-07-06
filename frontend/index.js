@@ -17,6 +17,7 @@ console.log("I am in index.js")
 //NEED TO ADD VALIDATION SO THAT TWO PROJECTS CAN'T HAVE SAME NAME 
 //NEED ERROR HANDLING 
 
+const likesUrl = 'http://localhost:3000/likes'
 const projectUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
@@ -210,6 +211,17 @@ const getProject = () => {
 
 
 // need to find correct thing to give to initCanvas 
+
+const projectId = document.getElementById('project-select').value
+const postLike = (projectId) => {
+//fetch and then sequence, posting all likes index
+//.then will grab a single like 
+}
+
+document.getElementById('like').addEventListener('click', function(event) {
+    event.preventDefault();
+// pass project Id into like & associate on backend 
+})
 
 document.getElementById('project-select').addEventListener('click', function(event) {
     event.preventDefault();
