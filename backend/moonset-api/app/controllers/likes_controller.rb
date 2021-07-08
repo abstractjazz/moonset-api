@@ -6,11 +6,19 @@ class LikesController < ApplicationController
     end 
     
     def create 
-        byebug
-        project = Project.find(params[:project_id])
+       byebug
+       like = Like.create(like_params)
+       like.save 
+       
     end
     
     def show
        like = Like.find(params[:id])
     end 
 end 
+
+private 
+
+    def like_params 
+        params.require(:like).permit(:project_id)
+    end 

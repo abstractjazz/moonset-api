@@ -214,12 +214,18 @@ const getProject = () => {
 
 const projectId = document.getElementById('project-select').value
 const postLike = (projectId) => {
-//fetch and then sequence, posting all likes index
+
+
+
+    //fetch and then sequence, posting all likes index
 //.then will grab a single like 
 }
 
 document.getElementById('like').addEventListener('click', function(event) {
-    event.preventDefault();
+    // event.preventDefault();
+    
+    // fetch(`${likesUrl}/${id}`)
+    // .then()
 // pass project Id into like & associate on backend 
 })
 
