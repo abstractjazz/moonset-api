@@ -140,7 +140,7 @@ const imgAdded = (e) => {
 }
 
 const canvas = initCanvas("canvas");
-const text = new fabric.Text("Upload an image to get started. Then feel free to delete me 🙃", {fill: "pink"})  
+const text = new fabric.Text("Upload an image to get started. Then feel free to delete me 🙃", {fill: "pink", fontSize: 20, fontFamily: 'helvetica'});  
 canvas.add(text)
 let mousePressed = false; 
 let color ='#ff1493';
