@@ -17,7 +17,7 @@
   <form action ="http://localhost:3000/projects" method="POST">
   <input id="project-title" type="text" name="project[title]" placeholder="give your project a title"><br>
   <input id="project-state" type="hidden" name="project[canvas]">
-  <input id="submit" type="submit" value="save">
+  <input id="project-submit" type="submit" value="save">
   </form>
   <form action="index.html" method="POST">
     <select id="project-select">
@@ -27,13 +27,19 @@
     </select>
   </form>
 
-  <form action="http://localhost:3000/likes" method="POST">
-  <input id="like" type="hidden" name="like">
-  <input id="projectId" type='hidden' name="projectId"> 
-  <input id="submit" type="submit" value="like this project">
+  <div id="notes">
+  <form class="notes" action="http://localhost:3000/notes" method="POST">
+  <input id="note" type="textarea" name="content" width="20px" height="20px">
+  <input id="projectId" type='hidden' name="projectId"><br>
+  <input id="submit" type="submit" value="add a note about this project">
   </form>
+  <div class = comments>
+    
+  </div>
+</div>
 
-  
+  <!--access projectAssoc using HTMLformElements.elements https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname
+  --> 
   <!--add load & save. put in div and stick to top with entire menu-->
   <!--how did beats handle params-->
    

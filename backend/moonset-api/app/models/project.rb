@@ -1,4 +1,4 @@
 class Project < ApplicationRecord
-    has_many :likes 
+    has_many :notes
     validates :title, presence: true, uniqueness: true
 end

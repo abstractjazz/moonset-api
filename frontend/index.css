@@ -7,3 +7,17 @@ body {
 width: 100vw;
 height: 100vh;
 } */
+
+div#notes {
+    top: 3px;
+    width: 22vw;
+    height: 100vh;
+    background: #424242;
+    position:fixed;
+    right: 50px;
+}
+
+div input#note {
+    width: 99%;
+    padding: 0px 0px 60px 0px;
+}

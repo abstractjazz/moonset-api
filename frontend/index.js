@@ -17,7 +17,7 @@ console.log("I am in index.js")
 //NEED TO ADD VALIDATION SO THAT TWO PROJECTS CAN'T HAVE SAME NAME 
 //NEED ERROR HANDLING 
 
-const likesUrl = 'http://localhost:3000/likes'
+const notesUrl = 'http://localhost:3000/notes'
 const projectUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
@@ -28,7 +28,7 @@ const btnFocus = (element, bgColor) => {
 
 const initCanvas = (id) => {
 return new fabric.Canvas(id, {
-    width: window.innerWidth,
+    width: window.innerWidth * .75,
     height: window.innerHeight,
     selection: false
     })
@@ -212,29 +212,50 @@ const getProject = () => {
 
 // need to find correct thing to give to initCanvas 
 
-const projectId = document.getElementById('project-select').value
-const postLike = (projectId) => {
 
-
-
-    //fetch and then sequence, posting all likes index
-//.then will grab a single like 
-}
-
-document.getElementById('like').addEventListener('click', function(event) {
-    // event.preventDefault();
+const postNote = () => {
     
-    // fetch(`${likesUrl}/${id}`)
-    // .then()
-// pass project Id into like & associate on backend 
+    let note = document.getElementById('note');
+    const form = document.querySelector('form.notes')
+    const projectId = document.getElementById('project-select').value
+    const div = document.querySelector('div.comments')
+    let config = {
+        method: 'POST', 
+        body: JSON.stringify({
+            project_id: projectId,
+            content: note.value}),
+            headers: {
+              'Content-Type':   'application/json',
+               'Accept': 'application/json'
+              }
+            };
+
+        fetch(notesUrl, config)
+        .then(resp=>resp.json())
+        
+        
+        let p = document.createElement('p');
+        p.style.color = "white";
+        p.innerText = note.value;
+        div.append(p);
+        note.value = " "
+        }
+
+
+
+document.querySelector('div#notes input#submit').addEventListener('click', function(event) {
+    event.preventDefault();
+   postNote();
 })
+
 
 document.getElementById('project-select').addEventListener('click', function(event) {
     event.preventDefault();
     getProject();
     console.log(event.target)
 })
- 
+
+
 
 const postProject = () => {
     
@@ -254,45 +275,14 @@ const postProject = () => {
         .then(resp=>resp.json())
         .then(data=>alert(data.message))
         }
-   
-    
-    // .catch(error) {
-    //     alert(error.message)
-    // }
 
 
-//understand what's happening in this post -- 
-//watch a vid in the AM
 
-document.getElementById("submit").addEventListener("click", function(event){
+document.getElementById("project-submit").addEventListener("click", function(event){
     event.preventDefault();
     postProject();
 })
 
-//what's the proper action for submitting? -- FOUND IT. 
-//Make a create action! 
 
-//basic setup for posting to server. needs more work. add project_params 
-
-// function fetchUsers() {
-//     return fetch("http://localhost:3000/users/2")
-//     .then(resp => resp.json())
-//     .then(json =>renderUsers(json))
-// }
-
-//     function renderUsers(user) {
-//         const body = document.querySelector('body');
-//         const h2 = document.createElement('h2')
-//         // h2.innerHTML = user.name
-//         body.appendChild(h2)
-//         h2.innerHTML=user.name
-//         console.log(user.name)
-
-//  }
-
-//     // document.addEventListener('click', function() {
-//     // fetchUsers()
-// })
-    
 
 
