@@ -21,3 +21,7 @@ div input#note {
     width: 99%;
     padding: 0px 0px 60px 0px;
 }
+
+div.comments {
+    color: white;
+}

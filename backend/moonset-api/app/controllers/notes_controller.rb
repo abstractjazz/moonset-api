@@ -15,6 +15,7 @@ end
     
     def show
        note = Note.find(params[:id])
+       render json: note 
     end 
 end 
 

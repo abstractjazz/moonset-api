@@ -183,6 +183,19 @@ console.log('getting projects!')
 getProjects();
 
 
+
+const loadProjectNotes = () => {
+   
+    const div = document.querySelector('div.comments')
+    let id = document.getElementById('project-select').value
+    let comments = fetch(`${projectUrl}/${id}/notes`)
+    .then(res=>res.json())
+    .then(data=>data.map(comments=>comments.content))
+    .then(strings=>div.append(strings))
+}
+
+
+
 // const modCanvas = new fabric.Canvas("canvas");
 
 const getProject = () => {
@@ -192,25 +205,15 @@ const getProject = () => {
     // .then(document.open())
     .then(data => canvas.loadFromJSON(data.canvas))
     canvas.renderAll();
+    loadProjectNotes();
+    oldComments = document.querySelector('div.comments')
+    oldComments.innerText=" ";
    }
 
 
 
-//    document.addEventListener('click', function() {
-//     fetch(`${projectUrl}/${2}`)
-//     .then(res=>res.json())
-//     .then(resp=> canvasTwo.loadFromJSON(resp.canvas))
-//     canvas.requestRenderAll();
-    
-//    })
-
-//need to append child? 
-//load from Json? 
-//was using initCanvas, which seems like wrong method
-//how to decipher the canvas object? back to video 
 
 
-// need to find correct thing to give to initCanvas 
 
 
 const postNote = () => {
@@ -234,13 +237,13 @@ const postNote = () => {
         .then(resp=>resp.json())
         
         
-        let p = document.createElement('p');
+    
+       let p = document.createElement('p');
         p.style.color = "white";
         p.innerText = note.value;
         div.append(p);
         note.value = " "
-        }
-
+    }
 
 
 document.querySelector('div#notes input#submit').addEventListener('click', function(event) {

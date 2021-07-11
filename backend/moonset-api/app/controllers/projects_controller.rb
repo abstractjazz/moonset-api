@@ -2,7 +2,6 @@ class ProjectsController < ApplicationController
     def index
         projects = Project.all
         render json: projects
-        #add project_params - accepts title and canvas via json(?)
     end
 
     def create 
