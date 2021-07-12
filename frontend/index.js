@@ -188,10 +188,9 @@ const loadProjectNotes = () => {
    
     const div = document.querySelector('div.comments')
     let id = document.getElementById('project-select').value
-    fetch(`${projectUrl}/${id}/notes`)
+     fetch(`${projectUrl}/${id}/notes`)
     .then(res=>res.json())
-    .then(data=>data.map(comments=>comments.content))
-    .then(strings=>div.append(strings))
+    .then(data=>data.map(comments=>div.append(comments.content + " ")))
 }
 
 
