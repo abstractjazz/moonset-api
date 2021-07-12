@@ -1,7 +1,8 @@
 class NotesController < ApplicationController
     
     def index 
-    notes = Note.all
+    project = Project.find(params[:project_id])
+    notes = project.notes
     render json: notes
     end 
     
@@ -10,6 +11,7 @@ class NotesController < ApplicationController
        project = Project.find(note.project_id)
        if note.save
        project.notes << note 
+       
     end
 end 
     

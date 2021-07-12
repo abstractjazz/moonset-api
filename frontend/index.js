@@ -154,7 +154,7 @@ const modes = {
 
 const reader = new FileReader()
 
-// setBackground(link, canvas)
+
 setPanEvents(canvas)
 setColor()
 const img = document.getElementById('imgUpload')
@@ -188,7 +188,7 @@ const loadProjectNotes = () => {
    
     const div = document.querySelector('div.comments')
     let id = document.getElementById('project-select').value
-    let comments = fetch(`${projectUrl}/${id}/notes`)
+    fetch(`${projectUrl}/${id}/notes`)
     .then(res=>res.json())
     .then(data=>data.map(comments=>comments.content))
     .then(strings=>div.append(strings))
