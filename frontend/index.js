@@ -185,12 +185,18 @@ getProjects();
 
 
 const loadProjectNotes = () => {
-   
+    const createP = (comments) => {
+    let p = document.createElement('p')
+    div.append(p)
+    p.innerText = comments 
+    }
     const div = document.querySelector('div.comments')
     let id = document.getElementById('project-select').value
      fetch(`${projectUrl}/${id}/notes`)
     .then(res=>res.json())
-    .then(data=>data.map(comments=>div.append(comments.content + " ")))
+    .then(data=>data.map(comments=>comments.content))
+    .then(info=>info.forEach(element=>createP(element)))
+    
 }
 
 
