@@ -11,6 +11,9 @@ const btnFocus = (element, bgColor) => {
 
 class Canvas {
 
+    constructor() {
+        
+    }
 
     initCanvas(id) {
         return new fabric.Canvas(id, {
@@ -109,8 +112,13 @@ class Canvas {
 
 class Project {
 
+    constructor() {
+
+    }
+
+
     getProjects(){
-        fetch(projectUrl).then(response=>response.json()).then(resp => {projectList(resp)})
+        fetch(projectUrl).then(response=>response.json()).then(resp => {this.projectList(resp)})
     }
 
 
@@ -158,6 +166,10 @@ class Project {
 
 
 class Note { 
+
+    constructor() {
+
+    }
 
    loadProjectNotes(){
         const createP = (comments) => {
@@ -207,12 +219,15 @@ class Note {
 }
 
 
-const canvas = initCanvas("canvas");
+const canvas = new Canvas();
+const workspace= canvas.initCanvas("canvas");
+
+console.log(canvas)
+
 const text = new fabric.Text("Upload an image to get started. Then feel free to delete me 🙃", {fill: "pink", fontSize: 20, fontFamily: 'helvetica'});  
-canvas.add(text)
+workspace.add(text)
 let mousePressed = false; 
 let color ='#ff1493';
-
 
 let currentMode;
 
@@ -224,49 +239,44 @@ const modes = {
 const reader = new FileReader()
 
 
-setPanEvents(canvas)
+canvas.setPanEvents(workspace)
 
-setColor()
+canvas.setColor()
 
 const img = document.getElementById('imgUpload')
-img.addEventListener('change', imgAdded)
+img.addEventListener('change', canvas.imgAdded)
 
 reader.addEventListener("load", ()=> { 
     fabric.Image.fromURL(reader.result, img => {
-        canvas.add(img)
-        canvas.requestRenderAll()
+        workspace.add(img)
+        workspace.requestRenderAll()
     })
 })
 
 
 
+const project = new Project();
 
+project.getProjects();
 
-getProjects();
-
-
-
-
-
-
-
+const note = new Note();
 
 
 document.querySelector('div#notes input#submit').addEventListener('click', function(event) {
     event.preventDefault();
-   postNote();
+   note.postNote();
 })
 
 
 document.getElementById('project-select').addEventListener('click', function(event) {
     event.preventDefault();
-    getProject();
+    project.getProject();
 })
 
 
 document.getElementById("project-submit").addEventListener("click", function(event){
     event.preventDefault();
-    postProject();
+    project.postProject();
 })
 
 
