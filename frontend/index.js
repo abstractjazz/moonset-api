@@ -11,10 +11,6 @@ const btnFocus = (element, bgColor) => {
 
 class Canvas {
 
-    constructor() {
-        
-    }
-
     initCanvas(id) {
         return new fabric.Canvas(id, {
             width: window.innerWidth * .75,
@@ -23,7 +19,6 @@ class Canvas {
             })
         }
 
-
         toggleMode(mode){
 
             if(mode === modes.pan) {
@@ -31,32 +26,31 @@ class Canvas {
                 currentMode = ' '
                 } else {
                 currentMode = modes.pan
-                canvas.isDrawingMode = false
-                canvas.renderAll()
+                workspace.isDrawingMode = false
+                workspace.renderAll()
                 }
         
             } else if (mode === modes.drawing) {
                 if (currentMode === modes.drawing) {
                 currentMode = ' '
-                canvas.isDrawingMode = false
-                canvas.renderAll()
+                workspace.isDrawingMode = false
+                workspace.renderAll()
                 } else {
                     currentMode = modes.drawing
-                    canvas.freeDrawingBrush.color = color 
-                    canvas.freeDrawingBrush.width = 18
-                    canvas.isDrawingMode = true
-                    canvas.renderAll()
+                    workspace.freeDrawingBrush.color = color 
+                    workspace.freeDrawingBrush.width = 18
+                    workspace.isDrawingMode = true
+                    workspace.renderAll()
                 }
             }
             
         }
 
         deleteItem(){
-            const thing = canvas.getActiveObject()
-            canvas.remove(thing)
-            canvas.renderAll()
+            const thing = workspace.getActiveObject()
+            workspace.remove(thing)
+            workspace.renderAll()
             }
-
 
             setPanEvents(canvas){
 
@@ -92,12 +86,11 @@ class Canvas {
                 const picker = document.getElementById('colorPicker')
                 picker.addEventListener('change', (event) => {
                     color = event.target.value
-                    canvas.freeDrawingBrush.color = color 
-                    canvas.renderAll()
+                    workspace.freeDrawingBrush.color = color 
+                    workspace.renderAll()
                 })
             
             }
-
 
             imgAdded(e){
                 const img = document.getElementById("imgUpload")
@@ -109,11 +102,10 @@ class Canvas {
 }
 
 
-
-class Project {
+class Project extends Canvas {
 
     constructor() {
-
+        super();
     }
 
 
@@ -134,10 +126,10 @@ class Project {
         let id = document.getElementById('project-select').value
         fetch(`${projectUrl}/${id}`)
         .then(res=>res.json())
-        .then(data => canvas.loadFromJSON(data.canvas))
-        canvas.renderAll();
-        loadProjectNotes();
-        oldComments = document.querySelector('div.comments')
+        .then(data => workspace.loadFromJSON(data.canvas))
+        workspace.renderAll();
+        note.loadProjectNotes();
+      const oldComments = document.querySelector('div.comments');
         oldComments.innerText=" ";
        }
 
@@ -148,7 +140,7 @@ class Project {
         let config = {
             method: 'POST', 
             body: JSON.stringify({
-                canvas: JSON.stringify(canvas),
+                canvas: JSON.stringify(workspace),
                 title: title.value}),
                 headers: {
                   'Content-Type':   'application/json',
@@ -186,7 +178,6 @@ class Note {
         
     }
 
-
     postNote(){
     
         let note = document.getElementById('note');
@@ -214,38 +205,26 @@ class Note {
             note.value = " "
         }
     
-
-
 }
 
 
 const canvas = new Canvas();
-const workspace= canvas.initCanvas("canvas");
-
-console.log(canvas)
-
-const text = new fabric.Text("Upload an image to get started. Then feel free to delete me 🙃", {fill: "pink", fontSize: 20, fontFamily: 'helvetica'});  
+const workspace = canvas.initCanvas("canvas");
+const text = new fabric.Text("Upload an image to get started, or choose a new project from the list above. Then feel free to delete me 🙃", {fill: "pink", fontSize: 20, fontFamily: 'helvetica'});  
 workspace.add(text)
 let mousePressed = false; 
 let color ='#ff1493';
-
 let currentMode;
-
 const modes = {
     pan:'pan',
     drawing: 'drawing'
 }
 
 const reader = new FileReader()
-
-
 canvas.setPanEvents(workspace)
-
 canvas.setColor()
-
 const img = document.getElementById('imgUpload')
 img.addEventListener('change', canvas.imgAdded)
-
 reader.addEventListener("load", ()=> { 
     fabric.Image.fromURL(reader.result, img => {
         workspace.add(img)
@@ -253,12 +232,8 @@ reader.addEventListener("load", ()=> {
     })
 })
 
-
-
 const project = new Project();
-
 project.getProjects();
-
 const note = new Note();
 
 
@@ -278,6 +253,9 @@ document.getElementById("project-submit").addEventListener("click", function(eve
     event.preventDefault();
     project.postProject();
 })
+
+const toggleMode = canvas.toggleMode; 
+const deleteItem = canvas.deleteItem;
 
 
 

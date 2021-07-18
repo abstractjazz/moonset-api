@@ -14,8 +14,8 @@
   <button id="delete-item" onclick='deleteItem()'>Delete item</button>
   <input id="colorPicker" value = "rgba(255,20,147,0.5)" data-jscolor=" "> 
   <input id="imgUpload" type="file" accept="image/*">
-  <form action ="http://localhost:3000/projects" method="POST">
-  <input id="project-title" type="text" name="project[title]" placeholder="give your project a title"><br>
+  <form action ="http://localhost:3000/projects" method="POST"><br><br>
+  <input id="project-title" type="text" name="project[title]" placeholder="give your project a title">
   <input id="project-state" type="hidden" name="project[canvas]">
   <input id="project-submit" type="submit" value="save">
   </form>
@@ -36,6 +36,10 @@
   <div class = comments>
     
   </div>
+</div>
+
+<div class="slug">
+  <img src="moonsetmoodboard.png">
 </div>
 
   <!--access projectAssoc using HTMLformElements.elements https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname

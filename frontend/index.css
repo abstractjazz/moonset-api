@@ -26,3 +26,9 @@ div.comments {
     color: white;
     
 }
+
+div.slug {
+    position: fixed;
+    bottom: 0px;
+    right: 400px;
+}
