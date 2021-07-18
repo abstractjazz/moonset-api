@@ -225,7 +225,9 @@ const reader = new FileReader()
 
 
 setPanEvents(canvas)
+
 setColor()
+
 const img = document.getElementById('imgUpload')
 img.addEventListener('change', imgAdded)
 
@@ -260,11 +262,6 @@ document.getElementById('project-select').addEventListener('click', function(eve
     event.preventDefault();
     getProject();
 })
-
-
-
-
-
 
 
 document.getElementById("project-submit").addEventListener("click", function(event){
