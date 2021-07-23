@@ -129,18 +129,6 @@ class Project {
 
 
 
-       getSavedProject(){
-        let id = document.getElementById('project-select').length 
-        fetch(`${projectUrl}/${parseInt(id)}`)
-        .then(res=>res.json())
-        .then(data=>workspace.loadFromJSON(data.canvas))
-        workspace.requestrenderAll();
-        // note.loadProjectNotes();
-        // const oldComments = document.querySelector('div.comments');
-        // oldComments.innerText=" ";
-            }
-
-
 
     postProject(){
     
@@ -159,7 +147,20 @@ class Project {
             fetch(projectUrl, config)
             .then(resp=>resp.json())
             .then(data=>alert(data.message))
+            project.getSavedProject();
             }
+
+
+            getSavedProject(){
+                let id = project.getProjects().length 
+                fetch(`${projectUrl}/${parseInt(id)}`)
+                .then(res=>res.json())
+                .then(data=>workspace.loadFromJSON(data.canvas))
+                workspace.requestrenderAll();
+                // note.loadProjectNotes();
+                // const oldComments = document.querySelector('div.comments');
+                // oldComments.innerText=" ";
+                    }
 
 
             projectSelectListener() {
