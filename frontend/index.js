@@ -5,9 +5,7 @@ const projectUrl = 'http://localhost:3000/projects'
 const link = 'https://media.pitchfork.com/photos/5c7d4c1b4101df3df85c41e5/1:1/w_320/Dababy_BabyOnBaby.jpg'
 const toggleBtn = document.getElementById('toggle-pan')
 const drawingBtn = document.getElementById('toggle-drawing')
-const btnFocus = (element, bgColor) => {
-    element.style.backgroundColor = bgColor
-}
+
 
 class Canvas {
 
@@ -97,17 +95,10 @@ class Canvas {
                 const file = img.files[0];
                 reader.readAsDataURL(file);
             }
-        
-
-}
+        }
 
 
-class Project extends Canvas {
-
-    constructor() {
-        super();
-    }
-
+class Project {
 
     getProjects(){
         fetch(projectUrl).then(response=>response.json()).then(resp => {this.projectList(resp)})
@@ -129,14 +120,31 @@ class Project extends Canvas {
         .then(data => workspace.loadFromJSON(data.canvas))
         workspace.renderAll();
         note.loadProjectNotes();
-      const oldComments = document.querySelector('div.comments');
+        const oldComments = document.querySelector('div.comments');
         oldComments.innerText=" ";
+        
+        let opts = document.getElementById('project-select')
+        document.getElementById('project-title').value = opts.options[opts.selectedIndex].text
        }
+
+
+
+       getSavedProject(){
+        let id = document.getElementById('project-select').length 
+        fetch(`${projectUrl}/${parseInt(id)}`)
+        .then(res=>res.json())
+        .then(data=>workspace.loadFromJSON(data.canvas))
+        workspace.requestrenderAll();
+        // note.loadProjectNotes();
+        // const oldComments = document.querySelector('div.comments');
+        // oldComments.innerText=" ";
+            }
+
 
 
     postProject(){
     
-        let title = document.getElementById('project-title');
+        let title = document.getElementById('project-title')
         let config = {
             method: 'POST', 
             body: JSON.stringify({
@@ -154,14 +162,25 @@ class Project extends Canvas {
             }
 
 
+            projectSelectListener() {
+                document.getElementById('project-select').addEventListener('click', function(event) {
+                event.preventDefault();
+                project.getProject();
+
+                })
+            }
+
+            projectSubmit() {
+               document.getElementById("project-submit").addEventListener("click", function(event){
+                event.preventDefault();
+                project.postProject();
+                })
+            
+            }
+
 }
 
-
 class Note { 
-
-    constructor() {
-
-    }
 
    loadProjectNotes(){
         const createP = (comments) => {
@@ -175,7 +194,6 @@ class Note {
         .then(res=>res.json())
         .then(data=>data.map(comments=>comments.content))
         .then(info=>info.forEach(element=>createP(element)))
-        
     }
 
     postNote(){
@@ -204,22 +222,33 @@ class Note {
             div.append(p);
             note.value = " "
         }
+
+        noteListener() {
+         document.querySelector('div#notes input#submit').addEventListener('click', function(event) {
+            event.preventDefault();
+            note.postNote();
+                }
     
+         )}
 }
 
 
 const canvas = new Canvas();
 const workspace = canvas.initCanvas("canvas");
-const text = new fabric.Text("Upload an image to get started, or choose a new project from the list above. Then feel free to delete me 🙃", {fill: "pink", fontSize: 20, fontFamily: 'helvetica'});  
+const text = new fabric.Text("Upload an image to get started, or choose a new project from the list above. Then feel free to delete me 🙃", {fill: 'pink', fontSize: 20, fontFamily: 'helvetica'});  
 workspace.add(text)
 let mousePressed = false; 
 let color ='#ff1493';
 let currentMode;
+
+
 const modes = {
     pan:'pan',
     drawing: 'drawing'
 }
 
+const toggleMode = canvas.toggleMode; 
+const deleteItem = canvas.deleteItem;
 const reader = new FileReader()
 canvas.setPanEvents(workspace)
 canvas.setColor()
@@ -234,28 +263,11 @@ reader.addEventListener("load", ()=> {
 
 const project = new Project();
 project.getProjects();
+project.projectSelectListener();
+project.projectSubmit();
+
 const note = new Note();
-
-
-document.querySelector('div#notes input#submit').addEventListener('click', function(event) {
-    event.preventDefault();
-   note.postNote();
-})
-
-
-document.getElementById('project-select').addEventListener('click', function(event) {
-    event.preventDefault();
-    project.getProject();
-})
-
-
-document.getElementById("project-submit").addEventListener("click", function(event){
-    event.preventDefault();
-    project.postProject();
-})
-
-const toggleMode = canvas.toggleMode; 
-const deleteItem = canvas.deleteItem;
+note.noteListener();
 
 
 
