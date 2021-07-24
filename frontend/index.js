@@ -159,7 +159,22 @@ class Project {
            .then(res=>res.json())
             .then(data=>workspace.loadFromJSON(data.canvas)))
              workspace.renderAll();
-       
+
+             const div = document.querySelector('div.comments')
+             const createP = (comments) => {
+                let p = document.createElement('p')
+                div.append(p)
+                p.innerText = comments 
+                }
+               
+    
+                
+                 fetch(projectUrl)
+                 .then(response=>response.json())
+                 .then(data=>fetch(`${projectUrl}/${data.length+1}/${notes}`)
+                .then(comms=>comms.map(comments=>comments.content)))
+                .then(info=>info.forEach(element=>createP(element)))
+            
                 console.log("I ran this method")
               
                     }
@@ -203,7 +218,7 @@ class Note {
     
         let note = document.getElementById('note');
         const form = document.querySelector('form.notes')
-        const projectId = document.getElementById('project-select').value
+        const projectId = parseInt(document.getElementById('project-select').length + 1)
         const div = document.querySelector('div.comments')
         let config = {
             method: 'POST', 
