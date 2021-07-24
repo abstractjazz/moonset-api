@@ -101,12 +101,12 @@ class Canvas {
 class Project {
 
     getProjects(){
-        fetch(projectUrl).then(response=>response.json()).then(resp => {this.projectList(resp)})
+   fetch(projectUrl).then(response=>response.json()).then(resp => {this.projectList(resp)})
     }
 
 
-   projectList(projects){
-        let projectDropDown = projects.map(proj => {
+  projectList(projects){
+      let projectDropDown = projects.map(proj => {
             return `<option value="${proj.id}">${proj.title}</option>`
         }).join('')
         document.getElementById('project-list').innerHTML = projectDropDown
@@ -147,19 +147,21 @@ class Project {
             fetch(projectUrl, config)
             .then(resp=>resp.json())
             .then(data=>alert(data.message))
-            project.getSavedProject();
+            this.getSavedProject();
             }
 
 
             getSavedProject(){
-                let id = project.getProjects().length 
-                fetch(`${projectUrl}/${parseInt(id)}`)
-                .then(res=>res.json())
-                .then(data=>workspace.loadFromJSON(data.canvas))
-                workspace.requestrenderAll();
-                // note.loadProjectNotes();
-                // const oldComments = document.querySelector('div.comments');
-                // oldComments.innerText=" ";
+
+           fetch(projectUrl)
+          .then(response=>response.json())
+          .then(data=>fetch(`${projectUrl}/${data.length+1}`)
+           .then(res=>res.json())
+            .then(data=>workspace.loadFromJSON(data.canvas)))
+             workspace.renderAll();
+       
+                console.log("I ran this method")
+              
                     }
 
 
@@ -227,9 +229,15 @@ class Note {
         noteListener() {
          document.querySelector('div#notes input#submit').addEventListener('click', function(event) {
             event.preventDefault();
+            console.log(document.getElementById("project-title").value) 
+            if (document.getElementById('project-title').value == "") {
+                 alert('name and save your project before commenting')
+             } else if (document.getElementById('note').value == "") {
+                alert('write a note first')
+            } else {
             note.postNote();
                 }
-    
+            }
          )}
 }
 
