@@ -131,7 +131,7 @@ class Project {
 
 
     postProject(){
-    
+        notes = document.querySelector('div#notes p')
         let title = document.getElementById('project-title')
         let config = {
             method: 'POST', 
@@ -147,6 +147,9 @@ class Project {
             fetch(projectUrl, config)
             .then(resp=>resp.json())
             .then(data=>alert(data.message))
+            if (document.querySelector('div#notes p') != null) {
+            notes.remove();
+            }
             this.getSavedProject();
             }
 
